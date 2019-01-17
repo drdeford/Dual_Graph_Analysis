@@ -19,9 +19,10 @@ import networkx as nx
 from random import randint, random
  
 n = 5 #grid size
+m = 5 #grid size
 k = 3 # number of possible steps
  
-grid = nx.grid_graph([n,n])
+grid = nx.grid_graph([n,m])
  
 unassigned = list(grid.nodes())
 rectangles = []
