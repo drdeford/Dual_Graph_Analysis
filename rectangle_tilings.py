@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Jan 17 13:51:58 2019
-
-@author: daryl
-"""
-
 '''do an aggregate method where each knows its
  initial neighbos at each step try to grow the rectangle 
  upwatds or rightwards (or diagonal? - not for now). Rnadom number of growth attempts (0- k). 
@@ -17,15 +11,20 @@ Created on Thu Jan 17 13:51:58 2019
  
 import networkx as nx
 from random import randint, random
- 
+import matplotlib.pyplot as plt
+
 n = 5 #grid size
-m = 5 #grid size
-k = 3 # number of possible steps
- 
+m = 10 #grid size
+k = 5 # number of possible steps
+
 grid = nx.grid_graph([n,m])
  
 unassigned = list(grid.nodes())
 rectangles = []
+
+cdict={}
+
+move = 0
 
 while unassigned:
 	
@@ -33,6 +32,7 @@ while unassigned:
 	uboundary = [ll]
 	rboundary = [ll]
 	unassigned.remove(ll)
+	cdict[ll]=move
 	
 	numr = 0
 	numu = 0
@@ -51,10 +51,14 @@ while unassigned:
 				numu += 1
 			
 				for j in range(len(uboundary)):
+                    
+					if uboundary[j] in rboundary:
+						rboundary.append((uboundary[j][0],uboundary[j][1]+1))
 					
 					#grid = nx.contracted_edge(grid, (ll, (uboundary[j][0],uboundary[j][1]+1)), self_loops=False)
 
 					unassigned.remove((uboundary[j][0],uboundary[j][1]+1))
+					cdict[(uboundary[j][0],uboundary[j][1]+1)] = move
 					uboundary[j] = (uboundary[j][0],uboundary[j][1]+1)
 					grid = nx.contracted_nodes(grid, ll, (uboundary[j][0],uboundary[j][1]), self_loops=False)
 
@@ -67,9 +71,14 @@ while unassigned:
 					temp += 1
 			if temp == len(rboundary):
 				numr += 1
+                
+                
 			
 				for j in range(len(rboundary)):
+					if rboundary[j] in uboundary:
+						uboundary.append((rboundary[j][0]+1,rboundary[j][1]))
 					unassigned.remove((rboundary[j][0]+1,rboundary[j][1]))
+					cdict[(rboundary[j][0]+1,rboundary[j][1])] = move
 					rboundary[j] = (rboundary[j][0]+1,rboundary[j][1])
 					
 					#grid = nx.contracted_edge(grid, (ll, (rboundary[j][0]+1,rboundary[j][1])), self_loops=False)
@@ -79,8 +88,13 @@ while unassigned:
 					
 					
 	rectangles.append([ll,(ll[0]+numr,ll[1]+numu)])
+	move += 1
 	
-
+    
+plt.figure()
 nx.draw(grid,pos= {x:x for x in grid.nodes()},label=True)
+grid2 = nx.grid_graph([n,m])
+plt.figure()
+nx.draw(grid2,pos= {x:x for x in grid2.nodes()},node_color=[cdict[x] for x in grid2.nodes()],cmap=plt.cm.jet,label=True)
 print(rectangles)
 	
