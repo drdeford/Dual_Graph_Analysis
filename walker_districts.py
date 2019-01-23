@@ -49,5 +49,5 @@ while unassigned:
 plt.figure()
 nx.draw(grid,pos= {x:x for x in grid.nodes()},node_color=[cdict[x] for x in grid.nodes()],node_size=600,cmap='tab20')#cmap=plt.cm.jet,label=True)
 
-
+# add dual graph consturction here!
         
