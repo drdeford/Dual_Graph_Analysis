@@ -64,4 +64,20 @@ nx.draw(grid2,pos= {x:x for x in grid2.nodes()},node_color=[cdict[x] for x in gr
 plt.title("Full Partition")
 
 
-        
+'''# Alternative for Random Choice of next walker:
+order = list(range(k))
+while unassigned:
+    i = choice(order)
+    
+    old=walkers[i]
+    #print(old)
+    walkers[i]=choice(list(grid.neighbors(walkers[i])))
+    #print(walkers[i])
+    if walkers[i] in unassigned:
+        unassigned.remove(walkers[i])
+        cdict[walkers[i]]=i+1
+        grid = nx.contracted_nodes(grid, walkers[i], old, self_loops=False)
+    else:
+        walkers[i]=old
+
+'''
