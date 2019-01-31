@@ -1,4 +1,7 @@
-def rect_graph(graph):
+def rect_graph(input_graph):
+    ``` This function extracts the dual graph of the 4 cycles of the input graph'''
+    graph=input_graph.copy()
+    
     rgraph=nx.Graph()
     nlist = list(graph.nodes)
     for n in nlist:
@@ -11,7 +14,8 @@ def rect_graph(graph):
                             rgraph.add_node((n,i,j,k))
                         
         graph.remove_node(n)
-        
+    #plt.figure()
+    #nx.draw(rgraph)    
     for i,j in combinations(list(rgraph.nodes),2):
         if len(set(i+j))<7:
             rgraph.add_edge(i,j)
@@ -19,6 +23,3 @@ def rect_graph(graph):
                         
     return rgraph
 
-h=rect_graph(grid)
-plt.figure()
-nx.draw(h)
