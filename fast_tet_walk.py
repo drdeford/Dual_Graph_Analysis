@@ -288,7 +288,7 @@ for nc in X.keys():
 plt.show()    
 
 
-for step in range(100000):
+for step in range(1000):
     #print(step)
     
     nc = choice(list(grid.nodes()))
