@@ -207,6 +207,7 @@ plt.plot([],[],'w',label="Dual Graph")
 fig.set_facecolor("lightpink")
 plt.title("Overlays")
 plt.legend()
+#fig.savefig('./whatever.png', facecolor=fig.get_facecolor(), edgecolor='none')
 plt.show()
 """
 if pt:    
