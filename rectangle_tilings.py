@@ -16,9 +16,9 @@ import numpy as np
 
 n = 20 #grid size
 m = 20 #grid size
-k = 5 # number of possible steps
-ns = 100
-
+k = 20 # number of possible steps
+ns = 300
+pt = True
 
 grid = nx.grid_graph([n,m])
  
@@ -101,14 +101,22 @@ np.random.shuffle(slist)
 #print(max(cdict.values()))
 #print(slist)
 #print(cdict)
-    
-plt.figure()
-nx.draw(grid,pos= {x:x for x in grid.nodes()},label=True,node_shape='s',node_size=ns)
-grid2 = nx.grid_graph([n,m])
-plt.show()
-plt.figure()
-nx.draw(grid2,pos= {x:x for x in grid2.nodes()},node_color=[slist[cdict[x]] for x in grid2.nodes()],cmap=plt.cm.jet,node_shape='s',node_size=ns)#,label=True)
-plt.show()
-
+if pt:    
+    fig = plt.figure()
+    ax1 = fig.add_subplot(1,2,1, adjustable='box', aspect=1)#plt.subplot(1,2,1)
+    nx.draw(grid,pos= {x:x for x in grid.nodes()},label=True,node_shape='s',node_size=50)
+    grid2 = nx.grid_graph([n,m])
+    ax2 = fig.add_subplot(1,2,2, adjustable='box', aspect=1)#plt.subplot(1,2,2)
+    nx.draw(grid2,pos= {x:x for x in grid2.nodes()},node_color=[slist[cdict[x]] for x in grid2.nodes()],cmap='tab20',node_shape='s',node_size=ns)#,plt.cm.jet,label=True)
+    plt.show()
+else:
+    plt.figure()
+    nx.draw(grid,pos= {x:x for x in grid.nodes()},label=True,node_shape='s',node_size=100)
+    grid2 = nx.grid_graph([n,m])
+    plt.show()
+    plt.figure()
+    nx.draw(grid2,pos= {x:x for x in grid2.nodes()},node_color=[slist[cdict[x]] for x in grid2.nodes()],cmap=plt.cm.jet,node_shape='s',node_size=ns)#,label=True)
+    plt.show()
+        
 #print(rectangles)
 	
