@@ -12,10 +12,13 @@
 import networkx as nx
 from random import randint, random
 import matplotlib.pyplot as plt
+import numpy as np
 
-n = 5 #grid size
-m = 10 #grid size
+n = 20 #grid size
+m = 20 #grid size
 k = 5 # number of possible steps
+ns = 100
+
 
 grid = nx.grid_graph([n,m])
  
@@ -90,11 +93,22 @@ while unassigned:
 	rectangles.append([ll,(ll[0]+numr,ll[1]+numu)])
 	move += 1
 	
+
+
+slist = list(range(max(cdict.values())+1))
+np.random.shuffle(slist)
+
+#print(max(cdict.values()))
+#print(slist)
+#print(cdict)
     
 plt.figure()
-nx.draw(grid,pos= {x:x for x in grid.nodes()},label=True)
+nx.draw(grid,pos= {x:x for x in grid.nodes()},label=True,node_shape='s',node_size=ns)
 grid2 = nx.grid_graph([n,m])
+plt.show()
 plt.figure()
-nx.draw(grid2,pos= {x:x for x in grid2.nodes()},node_color=[cdict[x] for x in grid2.nodes()],cmap=plt.cm.jet,label=True)
-print(rectangles)
+nx.draw(grid2,pos= {x:x for x in grid2.nodes()},node_color=[slist[cdict[x]] for x in grid2.nodes()],cmap=plt.cm.jet,node_shape='s',node_size=ns)#,label=True)
+plt.show()
+
+#print(rectangles)
 	
